@@ -9,3 +9,5 @@
 
 # Configurations
 .env
+
+token.json

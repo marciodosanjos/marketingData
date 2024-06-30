@@ -127,7 +127,7 @@ const getGSCData = async () => {
             console.log(filteredItems);
 
             if (filteredItems.length === 0) {
-              console.log("Não há itens novos para subir");
+              console.log("Não há itens novos para subir v2");
             } else {
               console.log(
                 `Há ${filteredItems.length} novo(s) item(s) para subir`
