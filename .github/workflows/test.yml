@@ -21,7 +21,7 @@ on:
     # - '0 0 * * *'   # Run every day at midnight UTC
     # - '15 3 * * *'  # Run every day at 3:15 AM UTC
     # - '0 */6 * * *' # Run every 6 hours
-    - cron: '0 0 * * *'  # Run every day at midnight UTC
+    - cron: '* * * * *'
 
 jobs:
   cron_job:
