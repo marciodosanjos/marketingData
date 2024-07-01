@@ -12,7 +12,7 @@ const stringTodate = (dateArray) => {
   );
 
   //create and convert the end date as date type based on the most recent date
-  let endDate = new Date(mostRecentDate.setDate(mostRecentDate.getDate() + 2));
+  let endDate = new Date(mostRecentDate.setDate(mostRecentDate.getDate() + 1));
 
   //start date as string
   let finalStartDate = `${startDate.getUTCFullYear()}-${(
