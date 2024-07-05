@@ -32,6 +32,7 @@ jobs:
       GSC_API_PRIVATE_AUT_PROVIDER_CERT_URL: ${{ secrets.GSC_API_PRIVATE_AUT_PROVIDER_CERT_URL }}
       GSC_API_CLIENT_CERT_URL: ${{ secrets.GSC_API_CLIENT_CERT_URL }}
       GSC_API_UNIVERSE_DOAMIN: ${{ secrets.GSC_API_UNIVERSE_DOAMIN }}
+      PORT: 8080 # Define a porta como 8080
 
     steps:
       - name: Checkout code
