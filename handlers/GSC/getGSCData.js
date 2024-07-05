@@ -120,16 +120,22 @@ const getGSCData = async () => {
 
             if (!Array.isArray(formatedResponse)) {
               console.log("formatedResponse is not an array");
+              process.exit(0);  // Finaliza o processo caso a resposta formatada não seja um array
+
               return;
             }
 
             if (formatedResponse.length === 0) {
               console.log("No new items to upload");
+              process.exit(0);  // Finaliza o processo se não houver novos itens
+              return;
             }
 
             if (formatedResponse.length !== 0 && items.length === 0) {
               console.log("New items to upload and the sheet is empty");
               await seoPageSheet.addRows(formatedResponse);
+              process.exit(0);  // Finaliza o processo após o upload de novos itens
+              return;
             }
 
             if (formatedResponse.length !== 0 && items.length !== 0) {
@@ -155,10 +161,13 @@ const getGSCData = async () => {
                 console.log(
                   `The new ${filteredItems.length} items were uploaded`
                 );
+                process.exit(0);  // Finaliza o processo após o upload de novos itens filtrados
+
               }
             }
           } catch (error) {
             console.error(error);
+            
           }
         }
 
@@ -166,11 +175,15 @@ const getGSCData = async () => {
       });
     } else {
       console.log("No website found.");
+      process.exit(0);  // Finaliza o processo se nenhum site for encontrado
+
     }
 
     // await getData(site.siteUrl);
   } catch (error) {
     console.error("Error by authenticating service account:", error);
+    process.exit(1);  // Finaliza o processo em caso de erro
+
   }
 };
 
