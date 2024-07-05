@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3000;  // Use a porta definida na variável de ambiente ou 3000 como padrão
+const port = process.env.PORT || 3000;  // Use a porta definida na variável de ambiente ou 3000 como padrão
 
 // Import function to get data
 const getGSCData = require("./handlers/GSC/getGSCData");
