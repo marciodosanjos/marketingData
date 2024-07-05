@@ -11,6 +11,28 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
 
+    env:
+      GOOGLE_SHEETS_TYPE: ${{ secrets.GOOGLE_SHEETS_TYPE }}
+      GOOGLE_SHEETS_PROJECT_ID: ${{ secrets.GOOGLE_SHEETS_PROJECT_ID }}
+      GOOGLE_SHEETS_PRIVATE_KEY: ${{ secrets.GOOGLE_SHEETS_PRIVATE_KEY }}
+      GOOGLE_SHEETS_CLIENT_EMAIL: ${{ secrets.GOOGLE_SHEETS_CLIENT_EMAIL }}
+      GOOGLE_SHEETS_CLIENT_ID: ${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
+      GOOGLE_SHEETS_AUTH_URI: ${{ secrets.GOOGLE_SHEETS_AUTH_URI }}
+      GOOGLE_SHEETS_TOKEN_URI: ${{ secrets.GOOGLE_SHEETS_TOKEN_URI }}
+      GOOGLE_SHEETS_PRIVATE_AUT_PROVIDER_CERT_URL: ${{ secrets.GOOGLE_SHEETS_PRIVATE_AUT_PROVIDER_CERT_URL }}
+      GOOGLE_SHEETS_CLIENT_CERT_URL: ${{ secrets.GOOGLE_SHEETS_CLIENT_CERT_URL }}
+      GSC_API_TYPE: ${{ secrets.GSC_API_TYPE }}
+      GSC_API_PROJECT_ID: ${{ secrets.GSC_API_PROJECT_ID }}
+      GSC_API_PRIVATE_KEY_ID: ${{ secrets.GSC_API_PRIVATE_KEY_ID }}
+      GSC_API_PRIVATE_KEY: ${{ secrets.GSC_API_PRIVATE_KEY }}
+      GSC_API_CLIENT_EMAIL: ${{ secrets.GSC_API_CLIENT_EMAIL }}
+      GSC_API_CLIENT_ID: ${{ secrets.GSC_API_CLIENT_ID }}
+      GSC_API_AUTH_URI: ${{ secrets.GSC_API_AUTH_URI }}
+      GSC_API_TOKEN_URI: ${{ secrets.GSC_API_TOKEN_URI }}
+      GSC_API_PRIVATE_AUT_PROVIDER_CERT_URL: ${{ secrets.GSC_API_PRIVATE_AUT_PROVIDER_CERT_URL }}
+      GSC_API_CLIENT_CERT_URL: ${{ secrets.GSC_API_CLIENT_CERT_URL }}
+      GSC_API_UNIVERSE_DOAMIN: ${{ secrets.GSC_API_UNIVERSE_DOAMIN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,7 +40,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: Install dependencies
         run: npm install
