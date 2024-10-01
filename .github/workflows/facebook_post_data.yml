@@ -1,0 +1,30 @@
+name: Fetch Facebook Post Data
+
+on:
+  schedule:
+    - cron: "*/30 * * * *" # A cada 30 minutos
+  workflow_dispatch:
+
+jobs:
+  fetch-facebook-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch Facebook Post Data
+        run: node handlers/getFacePostData.js
+        env:
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_SECRET: ${{ secrets.FB_APP_SECRET }}
+          SHORT_LIVED_TOKEN: ${{ secrets.SHORT_LIVED_TOKEN }}
+          FB_LONG_LIVED_TOKEN: ${{ secrets.FB_LONG_LIVED_TOKEN }}

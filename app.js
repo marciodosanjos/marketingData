@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 80; // Porta HTTP padrão
+const port = process.env.PORT || 3000;  
 
 // Import function to get data
 const getGSCData = require("./handlers/GSC/getGSCData");
