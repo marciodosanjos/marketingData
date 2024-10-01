@@ -7,12 +7,33 @@ const stringTodate = (dateArray) => {
   const mostRecentDate = convertedDates.sort((a, b) => b - a)[0];
 
   //convert the most recent date in date type
-  let startDate = new Date(
-    mostRecentDate.setDate(mostRecentDate.getDate() + 1)
-  );
+
+  let startDate;
+
+  if (mostRecentDate) {
+    // Verifica se mostRecentDate é válido antes de tentar usar setDate
+    startDate = new Date(mostRecentDate);
+    startDate.setDate(startDate.getDate() + 1);
+  } else {
+    // Se mostRecentDate for undefined, definir uma data padrão
+    startDate = new Date("2024-01-01");
+  }
 
   //create and convert the end date as date type based on the most recent date
-  let endDate = new Date(mostRecentDate.setDate(mostRecentDate.getDate() + 1));
+  let endDate =
+    new Date(mostRecentDate?.setDate(mostRecentDate.getDate() + 1)) ===
+    undefined
+      ? new Date(setDate("2024-01-02"))
+      : new Date(mostRecentDate?.setDate(mostRecentDate.getDate() + 1));
+
+  if (mostRecentDate) {
+    // Verifica se mostRecentDate é válido antes de tentar usar setDate
+    endDate = new Date(mostRecentDate);
+    endDate.setDate(startDate.getDate() + 2);
+  } else {
+    // Se mostRecentDate for undefined, definir uma data padrão
+    endDate = new Date("2024-01-02");
+  }
 
   //start date as string
   let finalStartDate = `${startDate.getUTCFullYear()}-${(

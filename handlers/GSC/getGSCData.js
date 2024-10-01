@@ -8,7 +8,7 @@ require("dotenv").config();
 
 //GoogleSpreadsheet Instance with ID of document
 const doc = new GoogleSpreadsheet(
-  "1JlicWF4OP7qgyRXDR7UFp3zpjigT3Lx9DrqjF-8IlsU"
+  "1V3Zq6eWgLO6HR6j4QD9W23RYWefdgLto5IhzSYvKHKA"
 );
 
 const getGSCData = async () => {
@@ -70,27 +70,31 @@ const getGSCData = async () => {
       console.log("Websites found:");
       res.data.siteEntry.forEach((site) => {
         console.log(`${site.siteUrl} (${site.permissionLevel})`);
-
         let siteUrl = site.siteUrl;
+
         async function getData() {
           try {
             //load google sheet
             await doc.useServiceAccountAuth(googleSheetCredentials);
-            await doc.loadInfo();
-            const seoPageSheet = doc.sheetsByIndex[7];
-            const items = await seoPageSheet.getRows();
 
+            const loadInfo = await doc.loadInfo();
+
+            // Acessar uma aba específica (pelo índice 0, a primeira aba)
+            const seoPageSheet = doc.sheetsByIndex[0];
+
+            const items = await seoPageSheet.getRows();
             const rawDates = items.map((item) => item.date);
             const { finalStartDate, finalEndDate } = stringTodate(rawDates);
-            console.log(
-              "Executing query on the data " + finalStartDate,
-              finalEndDate
-            );
+            // console.log(
+            //   "Executing query on the data " + finalStartDate,
+            //   finalEndDate
+            // );
 
             const query = {
               siteUrl: siteUrl,
-              startDate: finalStartDate,
-              endDate: finalEndDate,
+              startDate:
+                finalStartDate === undefined ? "2023-04-04" : finalStartDate,
+              endDate: finalEndDate === undefined ? "2023-04-04" : finalEndDate,
               dimensions: ["query", "date", "country", "page"],
               type: "web",
               aggregationType: "auto",
@@ -98,7 +102,10 @@ const getGSCData = async () => {
               startRow: 0,
             };
 
+            console.log(query);
+
             const response = await webmasters.searchanalytics.query(query);
+
             let formatedResponse = response?.data?.rows?.map((item) => ({
               id:
                 item.clicks +
@@ -120,6 +127,8 @@ const getGSCData = async () => {
 
             if (!Array.isArray(formatedResponse)) {
               console.log("formatedResponse is not an array");
+              console.log(response.data);
+              console.log(formatedResponse);
               return;
             }
 
@@ -158,7 +167,7 @@ const getGSCData = async () => {
               }
             }
           } catch (error) {
-            console.error(error);
+            console.error(error.message);
           }
         }
 
@@ -168,10 +177,24 @@ const getGSCData = async () => {
       console.log("No website found.");
     }
 
-    // await getData(site.siteUrl);
+    await getData(site.siteUrl);
   } catch (error) {
     console.error("Error by authenticating service account:", error);
   }
+
+  const googleSheetCredentials = {
+    type: process.env.GOOGLE_SHEETS_TYPE,
+    project_id: process.env.GOOGLE_SHEETS_PROJECT_ID,
+    private_key_id: process.env.GOOGLE_SHEETS_PRIVATE_KEY_ID,
+    private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+    client_id: process.env.GOOGLE_SHEETS_CLIENT_ID,
+    auth_uri: process.env.GOOGLE_SHEETS_AUTH_URI,
+    token_uri: process.env.GOOGLE_SHEETS_TOKEN_URI,
+    auth_provider_x509_cert_url:
+      process.env.GOOGLE_SHEETS_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.GOOGLE_SHEETS_CLIENT_CERT_URL,
+  };
 };
 
 module.exports = getGSCData;
