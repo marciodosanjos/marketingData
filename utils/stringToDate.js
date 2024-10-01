@@ -9,6 +9,7 @@ const stringTodate = (dateArray) => {
   //convert the most recent date in date type
 
   let startDate;
+  let endDate;
 
   if (mostRecentDate) {
     // Verifica se mostRecentDate é válido antes de tentar usar setDate
@@ -20,12 +21,6 @@ const stringTodate = (dateArray) => {
   }
 
   //create and convert the end date as date type based on the most recent date
-  let endDate =
-    new Date(mostRecentDate?.setDate(mostRecentDate.getDate() + 1)) ===
-    undefined
-      ? new Date(setDate("2024-01-02"))
-      : new Date(mostRecentDate?.setDate(mostRecentDate.getDate() + 1));
-
   if (mostRecentDate) {
     // Verifica se mostRecentDate é válido antes de tentar usar setDate
     endDate = new Date(mostRecentDate);
