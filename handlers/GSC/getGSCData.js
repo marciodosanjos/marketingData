@@ -129,16 +129,20 @@ const getGSCData = async () => {
               console.log("formatedResponse is not an array");
               console.log(response.data);
               console.log(formatedResponse);
+              process.exit(0); // Sucesso
+
               return;
             }
 
             if (formatedResponse.length === 0) {
               console.log("No new items to upload");
+              process.exit(0); // Sucesso
             }
 
             if (formatedResponse.length !== 0 && items.length === 0) {
               console.log("New items to upload and the sheet is empty");
               await seoPageSheet.addRows(formatedResponse);
+              process.exit(0); // Sucesso
             }
 
             if (formatedResponse.length !== 0 && items.length !== 0) {
@@ -165,9 +169,11 @@ const getGSCData = async () => {
                   `The new ${filteredItems.length} items were uploaded`
                 );
               }
+              process.exit(0); // Sucesso
             }
           } catch (error) {
             console.error(error.message);
+            process.exit(1); // Erro
           }
         }
 
@@ -175,11 +181,13 @@ const getGSCData = async () => {
       });
     } else {
       console.log("No website found.");
+      process.exit(1); // Erro
     }
 
     await getData(site.siteUrl);
   } catch (error) {
     console.error("Error by authenticating service account:", error);
+    process.exit(1); // Erro
   }
 
   const googleSheetCredentials = {
